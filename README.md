@@ -1,127 +1,247 @@
-# AI Model Selection and Configuration
+# System Architecture
 
-## Project Requirement Analysis
+## Architecture Overview
 
-The RK Health AI Smart Patient Appointment and Medication Reminder System uses an AI-powered Large Language Model (LLM) to generate clear, concise, and patient-friendly healthcare summaries.
+The RK Health AI Smart Patient Appointment and Medication Reminder System follows a multi-tier architecture consisting of a frontend interface, backend services, cloud database, AI integration, and third-party communication services.
 
-The AI processes healthcare information such as:
+### Architecture Components
 
-- Appointment records
-- Doctor's visit notes
-- Medication details
-- Health logs
-- Follow-up instructions
-
-The generated summaries help patients quickly understand their visit outcomes, prescribed medications, and future healthcare actions.
-
----
-
-## Explore Groq Models
-
-Groq provides several high-performance Large Language Models (LLMs) for natural language processing tasks.
-
-The available models were evaluated based on:
-
-- Response quality
-- Inference speed
-- Context window
-- Accuracy
-- Cost efficiency
-- Reliability
-- Healthcare summary generation capability
-
-Official Documentation:
-
-https://console.groq.com/docs/models
+- Frontend (HTML, CSS, JavaScript)
+- Google Apps Script Backend
+- Google Sheets Database
+- Groq AI Summary Service
+- Twilio SMS API
+- Google Calendar API
 
 ---
 
-## Model Evaluation
-
-The following factors were considered during model evaluation:
-
-| Evaluation Criteria | Description |
-|---------------------|-------------|
-| Response Quality | Generates accurate and patient-friendly summaries |
-| Speed | Produces responses with low latency |
-| Context Window | Handles large medical records efficiently |
-| Accuracy | Maintains important healthcare information |
-| Cost Efficiency | Suitable for scalable deployments |
-| Reliability | Consistent output quality |
-
----
-
-## Selected Model
-
-The project uses:
-
-**Model Name**
+# Architectural Diagram
 
 ```
-llama-3.3-70b-versatile
-```
-
-### Reason for Selection
-
-The model was selected because it provides:
-
-- High-quality healthcare summaries
-- Fast response generation
-- Large context window
-- Excellent language understanding
-- Reliable patient-friendly outputs
-- Efficient processing of appointment and medication information
-
----
-
-## Model Configuration
-
-| Parameter | Value |
-|-----------|-------|
-| Model | llama-3.3-70b-versatile |
-| Temperature | 0.8 |
-| Max Tokens | 2048 |
-
-### Configuration Example
-
-```python
-client.chat.completions.create(
-    model="llama-3.3-70b-versatile",
-    temperature=0.8,
-    max_tokens=2048
-)
+                        +---------------------------+
+                        |        User               |
+                        +-------------+-------------+
+                                      |
+                                      |
+                         HTML / CSS / JavaScript
+                                      |
+                                      v
+                     +-------------------------------+
+                     |     Frontend Dashboard         |
+                     +-------------------------------+
+                                      |
+                             HTTP Requests
+                                      |
+                                      v
+                     +-------------------------------+
+                     | Google Apps Script Backend     |
+                     +-------------------------------+
+                 _________|_____________|_____________
+                |         |             |             |
+                |         |             |             |
+                v         v             v             v
+      Google Sheets   Groq AI API   Twilio SMS   Google Calendar
+        Database       (Llama 3.3)      API           API
+                |             |             |             |
+                +-------------+-------------+-------------+
+                              |
+                              v
+                     Dashboard Response
 ```
 
 ---
 
-## Expected AI Output
+# Frontend Functionality
 
-The AI generates summaries that include:
+The frontend provides a responsive dashboard that enables healthcare providers and patients to manage healthcare information efficiently.
 
-- Appointment overview
-- Diagnosis summary
-- Prescribed medications
-- Dosage instructions
-- Follow-up recommendations
-- Lifestyle suggestions
-- Next appointment reminders
+## User Features
 
----
-
-## Benefits
-
-- Easy-to-understand healthcare summaries
-- Improved patient engagement
-- Reduced medical terminology complexity
-- Faster access to visit information
-- Better medication adherence
-- Improved healthcare management
+- Add appointments
+- Update appointments
+- Delete appointments
+- Manage medication schedules
+- Store doctor notes
+- Maintain patient records
+- View healthcare logs
+- Generate AI healthcare summaries
+- View reports and statistics
+- Receive medication reminders
+- Access appointment schedules
+- Mobile-friendly dashboard
+- Desktop-friendly interface
 
 ---
 
-## Security Considerations
+# Frontend Workflow
 
-- API keys are stored in a `.env` file.
-- Never expose API keys in public repositories.
-- Add `.env` to `.gitignore`.
-- Protect patient data and healthcare records.
+1. User logs into the dashboard.
+2. User enters appointment details.
+3. User adds medication schedules.
+4. User records doctor notes.
+5. User saves patient information.
+6. User requests an AI-generated summary.
+7. Dashboard displays reports and reminders.
+8. SMS notifications are sent automatically.
+9. Calendar events are created.
+
+---
+
+# Backend Responsibilities
+
+The backend is implemented using Google Apps Script.
+
+Its responsibilities include:
+
+- Receive frontend requests
+- Validate user input
+- Sanitize input data
+- Store healthcare records
+- Retrieve patient information
+- Update records
+- Delete records
+- Generate dashboard statistics
+- Generate AI summaries
+- Schedule appointments
+- Send SMS reminders
+- Communicate with Google Sheets
+- Connect with Google Calendar
+- Call Groq AI API
+
+---
+
+# Backend Functions
+
+| Function | Purpose |
+|----------|---------|
+| doGet(e) | Loads the web application |
+| addLog() | Adds appointment and patient records |
+| getLogs() | Retrieves healthcare records |
+| updateLog() | Updates patient information |
+| deleteLog() | Removes healthcare records |
+| getStats() | Returns dashboard statistics |
+| generateSummary() | Generates AI healthcare summaries |
+| sendSMS() | Sends SMS reminders using Twilio |
+| runOnce() | Performs initialization tasks |
+
+---
+
+# Google Sheets Database
+
+The application stores healthcare data inside Google Sheets.
+
+Tables include:
+
+- Appointments
+- MedicationSchedules
+- PatientRecords
+- HealthLogs
+- Summaries
+- Reports
+
+---
+
+# AI Integration
+
+The AI module generates patient-friendly healthcare summaries.
+
+## Workflow
+
+1. Backend receives appointment details.
+2. Doctor notes are collected.
+3. Medication information is combined.
+4. Patient history is prepared.
+5. Data is formatted into a prompt.
+6. Prompt is sent to Groq API.
+7. Llama-3.3-70B-Versatile generates a summary.
+8. Backend validates the response.
+9. Summary is stored in Google Sheets.
+10. Dashboard displays the generated summary.
+
+---
+
+# AI Processing Flow
+
+```
+Patient Records
+      │
+      ▼
+Appointment Details
+      │
+      ▼
+Doctor Notes
+      │
+      ▼
+Medication Details
+      │
+      ▼
+Google Apps Script
+      │
+      ▼
+Groq API
+      │
+      ▼
+Llama-3.3-70B-Versatile
+      │
+      ▼
+Generated Healthcare Summary
+      │
+      ▼
+Google Sheets
+      │
+      ▼
+Frontend Dashboard
+```
+
+---
+
+# Third-Party Integrations
+
+## Google Sheets
+
+- Stores healthcare records
+- Stores AI summaries
+- Stores reports
+
+## Twilio
+
+- Appointment reminders
+- Medication reminders
+- Emergency notifications
+
+## Google Calendar
+
+- Schedule appointments
+- Reminder notifications
+- Calendar synchronization
+
+## Groq AI
+
+- Generate healthcare summaries
+- Analyze doctor notes
+- Simplify medical information
+
+---
+
+# Security Features
+
+- Input validation
+- Data sanitization
+- API key protection
+- Environment variable configuration
+- Secure cloud storage
+- Access control
+- HTTPS communication
+
+---
+
+# Advantages
+
+- Cloud-based architecture
+- AI-powered healthcare summaries
+- Automated SMS reminders
+- Calendar integration
+- Centralized patient records
+- Responsive user interface
+- Scalable backend
+- Secure data management

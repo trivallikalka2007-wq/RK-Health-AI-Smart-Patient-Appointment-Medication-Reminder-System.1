@@ -1,12 +1,29 @@
-# Frontend Environment Preparation and Deployment Configuration
+# Deployment Guide
 
-This milestone prepares the frontend environment for deployment by organizing project files, verifying frontend resources, and configuring secure connections to backend cloud services.
+This section explains how to deploy the RK Health AI Smart Patient Appointment & Medication Reminder System by hosting the frontend on GitHub Pages and publishing the backend as a Google Apps Script Web App.
 
 ---
 
-# Project Structure
+# Frontend Deployment Using GitHub Pages
 
-Organize the frontend project using the following directory structure:
+## Step 1: Create a GitHub Repository
+
+1. Sign in to GitHub.
+2. Click **New Repository**.
+3. Repository Name:
+
+```text
+RK-Health
+```
+
+4. Select **Public**.
+5. Click **Create Repository**.
+
+---
+
+## Step 2: Upload Project Files
+
+Upload the frontend files:
 
 ```text
 RK-Health/
@@ -16,187 +33,101 @@ RK-Health/
 ├── script.js
 ├── config.js
 ├── README.md
-│
 └── assets/
-    ├── images/
-    ├── icons/
-    └── fonts/
+```
+
+Or use Git:
+
+```bash
+git init
+git add .
+git commit -m "Initial RK Health frontend"
+git branch -M main
+git remote add origin https://github.com/yourusername/RK-Health.git
+git push -u origin main
 ```
 
 ---
 
-# Frontend Environment Setup
+## Step 3: Enable GitHub Pages
 
-Before deployment, verify that all frontend files are correctly configured.
-
-### HTML Verification
-
-- Home page loads successfully
-- Navigation menu functions correctly
-- Dashboard components render properly
-- Forms are displayed correctly
-- Modals open and close successfully
-
----
-
-### CSS Verification
-
-Ensure the stylesheet provides a responsive healthcare dashboard.
-
-Verify:
-
-- Responsive layout
-- Dashboard cards
-- Sidebar navigation
-- Forms
-- Buttons
-- Tables
-- Modals
-- Mobile responsiveness
+1. Open your repository on GitHub.
+2. Click **Settings**.
+3. Select **Pages** from the left menu.
+4. Under **Build and deployment**:
+   - Source: **Deploy from a branch**
+   - Branch: **main**
+   - Folder: **/ (root)**
+5. Click **Save**.
 
 ---
 
-### JavaScript Verification
+## Step 4: Access the Website
 
-Confirm that JavaScript executes without errors.
-
-Verify:
-
-- Event listeners
-- Form validation
-- API requests
-- Dashboard updates
-- Dynamic rendering
-- Notifications
-- Modal handling
-- Search and filtering
-
----
-
-# API Configuration
-
-Configure the frontend to communicate with the Google Apps Script backend.
-
-### config.js
-
-```javascript
-const CONFIG = {
-    SCRIPT_URL: "YOUR_GOOGLE_APPS_SCRIPT_URL"
-};
-```
-
-Example:
-
-```javascript
-const CONFIG = {
-    SCRIPT_URL: "https://script.google.com/macros/s/XXXXXXXXXXXXXXXXXXXXXXXX/exec"
-};
-```
-
----
-
-# Environment Configuration
-
-Store sensitive credentials securely.
-
-Example `.env` file:
-
-```env
-SCRIPT_URL=https://script.google.com/macros/s/your_script_id/exec
-
-GOOGLE_SHEET_ID=your_google_sheet_id
-
-TWILIO_ACCOUNT_SID=your_account_sid
-
-TWILIO_AUTH_TOKEN=your_auth_token
-
-TWILIO_PHONE_NUMBER=your_twilio_phone_number
-
-GROQ_API_KEY=your_groq_api_key
-```
-
----
-
-# External Services
-
-## Google Apps Script
-
-Purpose:
-
-- Backend API
-- Request processing
-- CRUD operations
-- AI integration
-- Report generation
-
----
-
-## Google Sheets
-
-Purpose:
-
-- Cloud database
-- Patient records
-- Appointment logs
-- Medication schedules
-- AI summaries
-- Reports
-
----
-
-## Twilio
-
-Purpose:
-
-- SMS reminders
-- Appointment notifications
-- Medication alerts
-- Delivery tracking
-
----
-
-## Groq API
-
-Purpose:
-
-- AI health summary generation
-- Patient-friendly visit summaries
-- Follow-up recommendations
-
-Model Used:
+After deployment, your frontend will be available at:
 
 ```text
-llama-3.3-70b-versatile
+https://username.github.io/RK-Health/
 ```
 
----
-
-# Frontend Deployment Checklist
-
-Verify the following before deployment:
-
-- HTML pages load correctly
-- CSS renders properly
-- JavaScript has no console errors
-- API URL is configured
-- Google Apps Script is deployed
-- Google Sheets is connected
-- Twilio credentials are configured
-- Groq API key is valid
-- Dashboard loads successfully
-- Responsive layout works on all devices
+Replace **username** with your GitHub username.
 
 ---
 
-# Security Best Practices
+# Backend Deployment Using Google Apps Script
 
-- Store credentials in `.env`
-- Never expose API keys in source code
-- Add `.env` to `.gitignore`
-- Use HTTPS endpoints
-- Restrict access to Google Apps Script
-- Protect Twilio credentials
-- Rotate API keys if compromised
+## Step 1: Open Google Apps Script
+
+1. Open Google Apps Script.
+2. Open your RK Health project.
+
+---
+
+## Step 2: Deploy the Web App
+
+1. Click **Deploy**.
+2. Select **New Deployment**.
+3. Choose **Web App**.
+4. Configure:
+
+- Execute as: **Me**
+- Who has access: **Anyone** (or **Anyone with the link**, depending on your requirements)
+
+5. Click **Deploy**.
+
+---
+
+## Step 3: Authorize the Project
+
+- Sign in with your Google account.
+- Review the requested permissions.
+- Click **Allow**.
+
+---
+
+## Step 4: Copy the Web App URL
+
+After deployment, Google Apps Script generates a URL similar to:
+
+```text
+https://script.google.com/macros/s/your_script_id/exec
+```
+
+Copy this URL for use in the frontend.
+
+---
+
+# Update Frontend Configuration
+
+Open `config.js` and replace the placeholder URL:
+
+```javascript
+const CONFIG = {
+    SCRIPT_URL: "https://script.google.com/macros/s/your_script_id/exec"
+};
+```
+
+Save the file and push the updated code to GitHub.
 
 ---
 
@@ -204,61 +135,82 @@ Verify the following before deployment:
 
 ```text
 Frontend Files
-      │
-      ▼
-Verify HTML, CSS & JavaScript
-      │
-      ▼
-Configure API URLs
-      │
-      ▼
-Load Environment Variables
-      │
-      ▼
-Connect Google Apps Script
-      │
-      ▼
-Connect Google Sheets
-      │
-      ▼
-Configure Twilio
-      │
-      ▼
-Configure Groq API
-      │
-      ▼
-Test Application
-      │
-      ▼
-Deploy RK Health Dashboard
+        │
+        ▼
+Upload to GitHub
+        │
+        ▼
+Enable GitHub Pages
+        │
+        ▼
+Frontend Website
+        │
+        ▼
+Google Apps Script
+        │
+        ▼
+Deploy as Web App
+        │
+        ▼
+Generate Web App URL
+        │
+        ▼
+Update config.js
+        │
+        ▼
+Frontend Communicates with Backend
 ```
+
+---
+
+# Deployment Verification
+
+Verify the following after deployment:
+
+- GitHub Pages site opens successfully.
+- CSS styles are applied.
+- JavaScript loads without errors.
+- Forms submit successfully.
+- Google Apps Script Web App responds correctly.
+- Data is stored in Google Sheets.
+- AI summaries are generated.
+- Twilio SMS reminders are sent.
+- Google Calendar links are created.
+
+---
+
+# Security Best Practices
+
+- Never commit the `.env` file to GitHub.
+- Keep Groq API keys and Twilio credentials private.
+- Restrict Google Apps Script access where appropriate.
+- Use HTTPS URLs for all external services.
+- Add `.env` to `.gitignore`.
 
 ---
 
 # Technologies Used
 
+- GitHub
+- GitHub Pages
+- Google Apps Script
+- Google Sheets
+- Groq API
+- Twilio SMS API
 - HTML5
 - CSS3
 - JavaScript (ES6)
-- Google Apps Script
-- Google Sheets
-- Twilio SMS API
-- Groq API
-- Google Fonts
-- Font Awesome
 
 ---
 
 # Expected Outcome
 
-After completing this milestone:
+After completing deployment:
 
-- Frontend project is organized
-- HTML, CSS, and JavaScript are verified
-- Backend API is connected
-- Google Sheets cloud database is configured
-- Twilio SMS service is integrated
-- Groq AI service is configured
-- Secure environment variables are used
-- RK Health application is ready for deployment
-- 
+- The frontend is hosted on **GitHub Pages**.
+- The backend is deployed as a **Google Apps Script Web App**.
+- The frontend communicates with the backend using the Web App URL.
+- Patient records are stored in Google Sheets.
+- AI summaries are generated using the Groq API.
+- SMS reminders are sent through Twilio.
+- The RK Health application is fully accessible online.

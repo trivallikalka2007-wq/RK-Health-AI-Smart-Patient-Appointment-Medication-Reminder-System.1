@@ -1,247 +1,205 @@
-# System Architecture
+# Development Environment Setup
 
-## Architecture Overview
-
-The RK Health AI Smart Patient Appointment and Medication Reminder System follows a multi-tier architecture consisting of a frontend interface, backend services, cloud database, AI integration, and third-party communication services.
-
-### Architecture Components
-
-- Frontend (HTML, CSS, JavaScript)
-- Google Apps Script Backend
-- Google Sheets Database
-- Groq AI Summary Service
-- Twilio SMS API
-- Google Calendar API
+Before running the RK Health AI Smart Patient Appointment & Medication Reminder System, install the required software and configure the development environment.
 
 ---
 
-# Architectural Diagram
+# Prerequisites
 
-```
-                        +---------------------------+
-                        |        User               |
-                        +-------------+-------------+
-                                      |
-                                      |
-                         HTML / CSS / JavaScript
-                                      |
-                                      v
-                     +-------------------------------+
-                     |     Frontend Dashboard         |
-                     +-------------------------------+
-                                      |
-                             HTTP Requests
-                                      |
-                                      v
-                     +-------------------------------+
-                     | Google Apps Script Backend     |
-                     +-------------------------------+
-                 _________|_____________|_____________
-                |         |             |             |
-                |         |             |             |
-                v         v             v             v
-      Google Sheets   Groq AI API   Twilio SMS   Google Calendar
-        Database       (Llama 3.3)      API           API
-                |             |             |             |
-                +-------------+-------------+-------------+
-                              |
-                              v
-                     Dashboard Response
+Ensure the following software is installed:
+
+- Python 3.8 or later
+- pip (Python Package Manager)
+- Git
+- Visual Studio Code (Recommended)
+
+Verify the installation:
+
+```bash
+python --version
+pip --version
 ```
 
 ---
 
-# Frontend Functionality
+# Create a Virtual Environment
 
-The frontend provides a responsive dashboard that enables healthcare providers and patients to manage healthcare information efficiently.
+Create a virtual environment to isolate project dependencies.
 
-## User Features
+**Windows**
 
-- Add appointments
-- Update appointments
-- Delete appointments
-- Manage medication schedules
-- Store doctor notes
-- Maintain patient records
-- View healthcare logs
-- Generate AI healthcare summaries
-- View reports and statistics
-- Receive medication reminders
-- Access appointment schedules
-- Mobile-friendly dashboard
-- Desktop-friendly interface
-
----
-
-# Frontend Workflow
-
-1. User logs into the dashboard.
-2. User enters appointment details.
-3. User adds medication schedules.
-4. User records doctor notes.
-5. User saves patient information.
-6. User requests an AI-generated summary.
-7. Dashboard displays reports and reminders.
-8. SMS notifications are sent automatically.
-9. Calendar events are created.
-
----
-
-# Backend Responsibilities
-
-The backend is implemented using Google Apps Script.
-
-Its responsibilities include:
-
-- Receive frontend requests
-- Validate user input
-- Sanitize input data
-- Store healthcare records
-- Retrieve patient information
-- Update records
-- Delete records
-- Generate dashboard statistics
-- Generate AI summaries
-- Schedule appointments
-- Send SMS reminders
-- Communicate with Google Sheets
-- Connect with Google Calendar
-- Call Groq AI API
-
----
-
-# Backend Functions
-
-| Function | Purpose |
-|----------|---------|
-| doGet(e) | Loads the web application |
-| addLog() | Adds appointment and patient records |
-| getLogs() | Retrieves healthcare records |
-| updateLog() | Updates patient information |
-| deleteLog() | Removes healthcare records |
-| getStats() | Returns dashboard statistics |
-| generateSummary() | Generates AI healthcare summaries |
-| sendSMS() | Sends SMS reminders using Twilio |
-| runOnce() | Performs initialization tasks |
-
----
-
-# Google Sheets Database
-
-The application stores healthcare data inside Google Sheets.
-
-Tables include:
-
-- Appointments
-- MedicationSchedules
-- PatientRecords
-- HealthLogs
-- Summaries
-- Reports
-
----
-
-# AI Integration
-
-The AI module generates patient-friendly healthcare summaries.
-
-## Workflow
-
-1. Backend receives appointment details.
-2. Doctor notes are collected.
-3. Medication information is combined.
-4. Patient history is prepared.
-5. Data is formatted into a prompt.
-6. Prompt is sent to Groq API.
-7. Llama-3.3-70B-Versatile generates a summary.
-8. Backend validates the response.
-9. Summary is stored in Google Sheets.
-10. Dashboard displays the generated summary.
-
----
-
-# AI Processing Flow
-
+```bash
+python -m venv rkhealth-env
 ```
-Patient Records
-      │
-      ▼
-Appointment Details
-      │
-      ▼
-Doctor Notes
-      │
-      ▼
-Medication Details
-      │
-      ▼
-Google Apps Script
-      │
-      ▼
-Groq API
-      │
-      ▼
-Llama-3.3-70B-Versatile
-      │
-      ▼
-Generated Healthcare Summary
-      │
-      ▼
-Google Sheets
-      │
-      ▼
-Frontend Dashboard
+
+Activate the environment:
+
+```bash
+rkhealth-env\Scripts\activate
+```
+
+**macOS/Linux**
+
+```bash
+python3 -m venv rkhealth-env
+source rkhealth-env/bin/activate
+```
+
+After activation, the terminal should display:
+
+```bash
+(rkhealth-env)
 ```
 
 ---
 
-# Third-Party Integrations
+# Install Required Packages
 
-## Google Sheets
+Install Flask:
 
-- Stores healthcare records
-- Stores AI summaries
-- Stores reports
+```bash
+pip install Flask==3.0.3
+```
 
-## Twilio
+Install Groq SDK:
 
-- Appointment reminders
-- Medication reminders
-- Emergency notifications
+```bash
+pip install groq==0.11.0
+```
 
-## Google Calendar
+Install python-dotenv:
 
-- Schedule appointments
-- Reminder notifications
-- Calendar synchronization
+```bash
+pip install python-dotenv==1.0.1
+```
 
-## Groq AI
+Or install all dependencies using:
 
-- Generate healthcare summaries
-- Analyze doctor notes
-- Simplify medical information
-
----
-
-# Security Features
-
-- Input validation
-- Data sanitization
-- API key protection
-- Environment variable configuration
-- Secure cloud storage
-- Access control
-- HTTPS communication
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
-# Advantages
+# Configure Environment Variables
 
-- Cloud-based architecture
-- AI-powered healthcare summaries
-- Automated SMS reminders
-- Calendar integration
-- Centralized patient records
-- Responsive user interface
-- Scalable backend
-- Secure data management
+Create a file named:
+
+```
+.env
+```
+
+Add the following configuration:
+
+```env
+GROQ_API_KEY=your_groq_api_key_here
+TWILIO_ACCOUNT_SID=your_account_sid
+TWILIO_AUTH_TOKEN=your_auth_token
+TWILIO_PHONE_NUMBER=your_twilio_phone_number
+GOOGLE_SHEET_ID=your_google_sheet_id
+GOOGLE_SCRIPT_URL=your_google_apps_script_url
+```
+
+---
+
+# Project Directory Structure
+
+```
+RK-Health-AI/
+│
+├── app.py
+├── run_public.py
+├── requirements.txt
+├── README.md
+├── .env
+├── .gitignore
+│
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   └── script.js
+│   └── images/
+│
+├── templates/
+│   ├── index.html
+│   ├── dashboard.html
+│   └── report.html
+│
+├── utils/
+│   ├── ai.py
+│   ├── sms.py
+│   └── helpers.py
+│
+└── docs/
+```
+
+---
+
+# requirements.txt
+
+Example:
+
+```text
+Flask==3.0.3
+groq==0.11.0
+python-dotenv==1.0.1
+requests
+```
+
+Generate automatically:
+
+```bash
+pip freeze > requirements.txt
+```
+
+---
+
+# Run the Application
+
+Activate the virtual environment:
+
+```bash
+rkhealth-env\Scripts\activate
+```
+
+Run the application:
+
+```bash
+python app.py
+```
+
+Or
+
+```bash
+python run_public.py
+```
+
+The application will start at:
+
+```
+http://127.0.0.1:5000
+```
+
+---
+
+# Verify Installation
+
+Check that:
+
+- Python is installed.
+- Virtual environment is active.
+- Flask starts without errors.
+- Groq API key loads successfully.
+- Application opens in the browser.
+- Static files (CSS/JS) load correctly.
+
+---
+
+# Security Best Practices
+
+- Never upload the `.env` file to GitHub.
+- Add `.env` to `.gitignore`.
+- Keep API keys private.
+- Use virtual environments for dependency isolation.
+- Install only the required packages.

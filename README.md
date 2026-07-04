@@ -1,243 +1,253 @@
-# Core Healthcare Features Implementation
+# Backend Implementation and Cloud Integration
 
-The RK Health AI Smart Patient Appointment & Medication Reminder System provides an integrated healthcare workflow for managing patient appointments, medication schedules, AI-generated health summaries, and healthcare reports.
+This milestone implements the core backend functionality of the RK Health AI Smart Patient Appointment & Medication Reminder System. The backend is developed using Google Apps Script and integrates with Google Sheets, Groq AI, Twilio SMS, and Google Calendar to provide a complete healthcare management workflow.
 
 ---
 
-# 1. Appointment Management Module
+# Backend Functions
 
-## Description
+The application backend exposes the following functions:
 
-The Appointment Management Module enables healthcare providers and patients to create, update, view, and delete appointment records.
+| Function | Description |
+|----------|-------------|
+| `doGet(e)` | Loads the web application and serves the dashboard. |
+| `addLog()` | Stores new patient appointments and medication records in Google Sheets. |
+| `getLogs()` | Retrieves all healthcare records for dashboard display. |
+| `updateLog()` | Updates existing patient records and appointment details. |
+| `deleteLog()` | Deletes selected healthcare records from the database. |
+| `getStats()` | Calculates dashboard statistics such as appointments, reminders, and reports. |
+| `generateSummary()` | Generates AI-powered patient health summaries using the Groq API. |
+| `sendSMS()` | Sends appointment and medication reminders through Twilio. |
+| `runOnce()` | Performs initial setup, creates required sheets, and initializes configuration. |
 
-### Features
+---
 
-- Add new appointments
-- Edit appointment details
-- Delete appointments
-- Search appointments
-- View appointment history
-- Store doctor notes
-- Maintain patient records
-- Dashboard appointment display
+# User Input Processing
 
-### Appointment Information
+The frontend provides forms for entering healthcare information.
 
-Each appointment stores:
+### Patient Information
 
 - Patient Name
-- Patient ID
 - Doctor Name
-- Department
 - Appointment Title
 - Appointment Date
 - Appointment Time
-- Visit Notes
-- Status
-
-### Workflow
-
-1. User opens the dashboard.
-2. User enters patient details.
-3. User selects doctor information.
-4. User enters appointment date and time.
-5. User adds visit notes.
-6. Data is validated.
-7. Appointment is stored in Google Sheets.
-8. Dashboard displays the appointment.
-
----
-
-# 2. Medication Reminder Module
-
-## Description
-
-The Medication Reminder Module manages medicine schedules and prepares reminder notifications.
-
-### Features
-
-- Add medication
-- Edit medication
-- Delete medication
-- Daily reminder scheduling
-- SMS reminder support
-- Dosage tracking
-- Medication history
-- Reminder status monitoring
-
-### Medication Information
-
-- Patient Name
-- Medicine Name
+- Medication Name
 - Dosage
-- Frequency
-- Morning Schedule
-- Afternoon Schedule
-- Evening Schedule
-- Contact Number
-- Start Date
-- End Date
+- Medicine Timing
+- Phone Number
+- Visit Notes
 
-### Workflow
+### Processing Workflow
 
-1. User enters medication details.
-2. System validates data.
-3. Schedule is stored.
-4. Reminder time is calculated.
-5. Twilio sends SMS reminders.
-6. Reminder history is recorded.
+1. User submits the form.
+2. Frontend sends data to Google Apps Script.
+3. Backend extracts request parameters.
+4. Input validation is performed.
+5. Valid records are stored in Google Sheets.
+6. Dashboard is updated with the latest information.
 
 ---
 
-# 3. AI Health Summary Generator
+# Input Validation
 
-## Description
+The application validates all incoming data before processing.
 
-The AI Summary Generator uses the Groq API with the **llama-3.3-70b-versatile** model to generate patient-friendly healthcare summaries.
+### Validation Rules
 
-### AI Input
+- Patient Name cannot be empty.
+- Doctor Name cannot be empty.
+- Appointment Date must be valid.
+- Appointment Time must be valid.
+- Phone Number must follow the correct format.
+- Medication Name cannot be empty.
+- Dosage information is required.
+- Visit Notes should not exceed the allowed length.
 
+---
+
+# Google Sheets Integration
+
+Google Sheets serves as the cloud database for the application.
+
+### Stored Information
+
+- Patient Records
 - Appointment Details
-- Doctor Notes
-- Diagnosis
-- Medication Information
-- Follow-up Instructions
-- Patient History
+- Medication Schedules
+- Reminder History
+- AI Health Summaries
+- Healthcare Reports
 
-### AI Output
+### Database Operations
+
+- Create records
+- Read records
+- Update records
+- Delete records
+- Generate reports
+- Retrieve dashboard statistics
+
+---
+
+# AI Integration
+
+The application integrates with the Groq API using the **llama-3.3-70b-versatile** model.
+
+### AI Workflow
+
+1. Retrieve patient information.
+2. Collect appointment details.
+3. Collect doctor notes.
+4. Gather medication information.
+5. Create a structured prompt.
+6. Send the request to the Groq API.
+7. Generate a patient-friendly summary.
+8. Validate the generated response.
+9. Store the summary in Google Sheets.
+10. Display the summary on the dashboard.
+
+### AI Output Includes
 
 - Visit Overview
 - Diagnosis Summary
 - Medication Guidance
-- Follow-up Recommendations
-- Lifestyle Advice
+- Follow-up Instructions
+- Lifestyle Recommendations
 - Next Appointment Reminder
-
-### AI Workflow
-
-1. Retrieve appointment record.
-2. Collect doctor notes.
-3. Format prompt.
-4. Send request to Groq API.
-5. Generate summary.
-6. Validate AI response.
-7. Store summary in Google Sheets.
-8. Display summary on the dashboard.
 
 ---
 
-# 4. Health Report Generator
+# Twilio SMS Integration
 
-## Description
-
-The Health Report Generator consolidates patient healthcare information into a single report.
-
-### Report Includes
-
-- Patient Details
-- Appointment History
-- Medication Schedule
-- AI Health Summary
-- Reminder History
-- Compliance Indicators
-- Doctor Notes
-- Upcoming Appointments
+Twilio is used for sending appointment and medication reminders.
 
 ### Features
 
-- View Reports
-- Generate Reports
-- Dashboard Statistics
-- Patient History
-- Healthcare Compliance
-- Export Ready Data
+- Format phone numbers
+- Send appointment reminders
+- Send medication reminders
+- Track SMS delivery status
+- Update reminder completion history
+
+### SMS Workflow
+
+1. Retrieve reminder information.
+2. Format recipient phone number.
+3. Generate reminder message.
+4. Send SMS through Twilio.
+5. Receive delivery status.
+6. Update reminder history.
+
+---
+
+# Google Calendar Integration
+
+Google Calendar integration allows users to schedule appointments directly.
+
+### Features
+
+- Generate appointment events
+- Add appointment reminders
+- Create Google Calendar event links
+- Synchronize appointment schedules
 
 ### Workflow
 
-1. Retrieve patient data.
-2. Retrieve appointments.
-3. Retrieve medication records.
-4. Retrieve AI summaries.
-5. Retrieve reminder history.
-6. Generate consolidated report.
-7. Display report on the dashboard.
+1. Retrieve appointment information.
+2. Generate Google Calendar event.
+3. Create reminder.
+4. Display calendar link.
+5. User adds the event to their calendar.
 
 ---
 
-# Integrated Workflow
+# Complete Healthcare Workflow
 
-```
+```text
 Patient
-   │
-   ▼
-Dashboard (HTML/CSS/JavaScript)
-   │
-   ▼
+    │
+    ▼
+Frontend Dashboard
+(HTML • CSS • JavaScript)
+    │
+    ▼
 Google Apps Script Backend
-   │
-   ├── Appointment Management
-   ├── Medication Reminder
-   ├── AI Summary Generation
-   └── Health Report Generator
-   │
-   ▼
+    │
+    ├── addLog()
+    ├── getLogs()
+    ├── updateLog()
+    ├── deleteLog()
+    ├── getStats()
+    ├── generateSummary()
+    ├── sendSMS()
+    └── runOnce()
+    │
+    ▼
 Google Sheets Database
-   │
-   ├── Appointments
-   ├── Medications
-   ├── Summaries
-   └── Reports
-   │
-   ▼
-Groq AI
-   │
-   ▼
-Patient-Friendly Summary
-   │
-   ▼
-Dashboard Display
-   │
-   ▼
-Twilio SMS Reminder
-   │
-   ▼
-Patient Notification
+    │
+    ├── Patient Records
+    ├── Appointments
+    ├── Medications
+    ├── Reports
+    └── AI Summaries
+    │
+    ├──────────────┐
+    │              │
+    ▼              ▼
+Groq API      Twilio SMS
+    │              │
+    ▼              ▼
+AI Summary   Reminder Messages
+    │
+    ▼
+Google Calendar
+    │
+    ▼
+Patient Dashboard
 ```
 
 ---
 
-# Module Integration
+# Key Features
 
-| Module | Purpose |
-|---------|---------|
-| Appointment Management | Manage doctor appointments |
-| Medication Reminder | Track medicines and send reminders |
-| AI Health Summary | Generate patient-friendly summaries |
-| Health Report Generator | Create consolidated healthcare reports |
-
----
-
-# Benefits
-
-- Centralized healthcare records
-- Easy appointment management
-- Automated medication reminders
-- AI-assisted healthcare summaries
-- Improved patient understanding
-- Better medication compliance
-- Cloud-based data storage
-- Responsive dashboard
-- Automated reporting
-- Improved healthcare management
+- Patient record management
+- Appointment scheduling
+- Medication reminder management
+- AI-powered health summaries
+- Healthcare report generation
+- Google Sheets cloud database
+- Twilio SMS notifications
+- Google Calendar integration
+- Dashboard analytics
+- Secure API key management
 
 ---
 
-# Security
+# Security Measures
 
 - Input validation
 - Data sanitization
-- Secure API key storage using `.env`
+- Secure environment variables (`.env`)
+- Protected API credentials
 - HTTPS communication
 - Google authentication
-- Twilio credential protection
-- Secure cloud database access
+- Restricted access to cloud resources
+- `.env` excluded from GitHub using `.gitignore`
+
+---
+
+# Expected Outcome
+
+After completing this milestone, the RK Health AI Smart Patient Appointment & Medication Reminder System will provide:
+
+- Complete patient record management
+- Automated appointment scheduling
+- Medication reminder notifications
+- AI-generated healthcare summaries
+- Healthcare report generation
+- Google Sheets cloud storage
+- Twilio SMS integration
+- Google Calendar event creation
+- Secure and scalable healthcare workflow

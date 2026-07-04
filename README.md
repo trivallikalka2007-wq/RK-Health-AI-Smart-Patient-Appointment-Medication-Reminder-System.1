@@ -1,98 +1,127 @@
-# Cloud Services and Configuration
+# AI Model Selection and Configuration
 
-Before starting development, configure all required cloud services and external accounts.
+## Project Requirement Analysis
 
-## Step 1 – Create a Google Account
+The RK Health AI Smart Patient Appointment and Medication Reminder System uses an AI-powered Large Language Model (LLM) to generate clear, concise, and patient-friendly healthcare summaries.
 
-Create or use an existing Google account to access the following services:
+The AI processes healthcare information such as:
 
-- Google Sheets
-- Google Apps Script
-- Google Calendar
+- Appointment records
+- Doctor's visit notes
+- Medication details
+- Health logs
+- Follow-up instructions
 
-These services are used for storing patient records, backend automation, and appointment scheduling.
-
----
-
-## Step 2 – Create a Google Apps Script Project
-
-1. Open Google Apps Script.
-2. Click **New Project**.
-3. Rename the project to:
-
-```
-RK Health AI Reminder System
-```
-
-This project hosts backend logic, API endpoints, and integrations with Google Sheets and Google Calendar.
+The generated summaries help patients quickly understand their visit outcomes, prescribed medications, and future healthcare actions.
 
 ---
 
-## Step 3 – Create Google Sheets Database
+## Explore Groq Models
 
-Create a Google Spreadsheet named:
+Groq provides several high-performance Large Language Models (LLMs) for natural language processing tasks.
 
-```
-RK Health Database
-```
+The available models were evaluated based on:
 
-Create the following sheets:
+- Response quality
+- Inference speed
+- Context window
+- Accuracy
+- Cost efficiency
+- Reliability
+- Healthcare summary generation capability
 
-- Appointments
-- MedicationSchedules
-- PatientSummaries
-- Reports
+Official Documentation:
 
-These sheets will store healthcare records securely.
-
----
-
-## Step 4 – Configure Twilio Account
-
-Create a Twilio account and collect the following credentials:
-
-- Account SID
-- Auth Token
-- Twilio Phone Number
-
-These credentials are required to send SMS medication reminders and appointment notifications.
+https://console.groq.com/docs/models
 
 ---
 
-## Step 5 – Configure AI Service Access
+## Model Evaluation
 
-Generate the required API credentials for AI-powered healthcare summary generation.
+The following factors were considered during model evaluation:
 
-For this project, create a Groq API Key and store it securely.
+| Evaluation Criteria | Description |
+|---------------------|-------------|
+| Response Quality | Generates accurate and patient-friendly summaries |
+| Speed | Produces responses with low latency |
+| Context Window | Handles large medical records efficiently |
+| Accuracy | Maintains important healthcare information |
+| Cost Efficiency | Suitable for scalable deployments |
+| Reliability | Consistent output quality |
 
-Example:
+---
+
+## Selected Model
+
+The project uses:
+
+**Model Name**
 
 ```
-GROQ_API_KEY=your_api_key
+llama-3.3-70b-versatile
+```
+
+### Reason for Selection
+
+The model was selected because it provides:
+
+- High-quality healthcare summaries
+- Fast response generation
+- Large context window
+- Excellent language understanding
+- Reliable patient-friendly outputs
+- Efficient processing of appointment and medication information
+
+---
+
+## Model Configuration
+
+| Parameter | Value |
+|-----------|-------|
+| Model | llama-3.3-70b-versatile |
+| Temperature | 0.8 |
+| Max Tokens | 2048 |
+
+### Configuration Example
+
+```python
+client.chat.completions.create(
+    model="llama-3.3-70b-versatile",
+    temperature=0.8,
+    max_tokens=2048
+)
 ```
 
 ---
 
-## Step 6 – Secure Configuration
+## Expected AI Output
 
-Store all sensitive credentials inside a `.env` file.
+The AI generates summaries that include:
 
-Example:
-
-```env
-GROQ_API_KEY=your_groq_api_key
-TWILIO_ACCOUNT_SID=your_account_sid
-TWILIO_AUTH_TOKEN=your_auth_token
-TWILIO_PHONE_NUMBER=your_twilio_phone_number
-GOOGLE_SHEET_ID=your_google_sheet_id
-GOOGLE_SCRIPT_URL=your_google_apps_script_url
-```
+- Appointment overview
+- Diagnosis summary
+- Prescribed medications
+- Dosage instructions
+- Follow-up recommendations
+- Lifestyle suggestions
+- Next appointment reminders
 
 ---
 
-## Security Best Practices
+## Benefits
 
-- Never upload `.env` to GitHub.
+- Easy-to-understand healthcare summaries
+- Improved patient engagement
+- Reduced medical terminology complexity
+- Faster access to visit information
+- Better medication adherence
+- Improved healthcare management
+
+---
+
+## Security Considerations
+
+- API keys are stored in a `.env` file.
+- Never expose API keys in public repositories.
 - Add `.env` to `.gitignore`.
-- Never expose API keys in source code.
-- Regenerate credentials immediately if they are accidentally exposed.
+- Protect patient data and healthcare records.
